@@ -12,11 +12,5 @@ import java.time.LocalDate;
 public class Savings extends Account{
     private  String secretKey;
     private Long minimumBalance;
-    private Long penaltyFee;
-    private LocalDate creationDate;
-
-    @Enumerated(EnumType.STRING)
-    private Status status;
-
     private Long interestRate;
 }

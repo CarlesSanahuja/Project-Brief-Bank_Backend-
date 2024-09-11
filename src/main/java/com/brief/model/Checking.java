@@ -12,11 +12,9 @@ import java.time.LocalDate;
 @Entity
 public class Checking extends Account{
 
-    private  String secretKey;
     private Long minimumBalance;
-    private Long penaltyFee;
     private Long monthyMaintenanceFee;
-    private LocalDate creationDate;
+    private String secretKey;
 
    @Enumerated(EnumType.STRING)
    private Status status;

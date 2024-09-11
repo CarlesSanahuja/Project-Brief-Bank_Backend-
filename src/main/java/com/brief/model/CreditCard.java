@@ -8,5 +8,4 @@ import lombok.Data;
 public class CreditCard extends Account{
     private Long creditLimit_;
     private Long interestRate;
-    private Long penaltyFee;
 }

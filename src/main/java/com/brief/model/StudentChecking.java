@@ -12,9 +12,5 @@ import java.time.LocalDate;
 @Entity
 public class StudentChecking extends Account{
     private  String secretKey;
-    private Long penaltyFee;
-    private LocalDate creationDate;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
 }
