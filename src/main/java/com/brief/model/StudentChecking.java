@@ -13,4 +13,6 @@ import java.time.LocalDate;
 public class StudentChecking extends Account{
     private  String secretKey;
 
+    @Enumerated(EnumType.STRING)
+    private Status status;
 }

@@ -11,6 +11,9 @@ import java.time.LocalDate;
 @Entity
 public class Savings extends Account{
     private  String secretKey;
-    private Long minimumBalance;
-    private Long interestRate;
+    private Long minimumBalance = 1000L;
+    private Double interestRate = 0.0025;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
 }

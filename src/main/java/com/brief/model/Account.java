@@ -30,7 +30,5 @@ public abstract class Account {
     @JoinColumn(name = "secondary_owner_id")
     private AccountHolders secondaryOwner;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
 
 }
