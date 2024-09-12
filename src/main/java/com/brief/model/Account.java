@@ -1,10 +1,7 @@
 package com.brief.model;
-
-import com.brief.enums.Status;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
@@ -18,17 +15,17 @@ public abstract class Account {
 
     private Long balance;
 
-    private Long penaltyFee;
+    private BigDecimal penaltyFee = BigDecimal.valueOf(40);  // Valor por defecto para penalizaciones
 
-    private LocalDate creationDate;
+    private LocalDate creationDate = LocalDate.now();
 
+    // Relación con AccountHolder
     @ManyToOne
-    @JoinColumn(name = "primary_owner_id", nullable = false)
+    @JoinColumn(name = "primary_owner_id")  // Columna que relaciona con el PrimaryOwner
     private AccountHolders primaryOwner;
 
     @ManyToOne
-    @JoinColumn(name = "secondary_owner_id")
+    @JoinColumn(name = "secondary_owner_id", nullable = true)  // Secundario es opcional
     private AccountHolders secondaryOwner;
-
 
 }

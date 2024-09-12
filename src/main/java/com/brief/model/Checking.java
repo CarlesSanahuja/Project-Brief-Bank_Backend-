@@ -6,14 +6,15 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
 @Entity
 public class Checking extends Account{
 
-    private Long minimumBalance;
-    private Long monthyMaintenanceFee;
+    private BigDecimal minimumBalance = BigDecimal.valueOf(250);
+    private BigDecimal monthlyMaintenanceFee = BigDecimal.valueOf(12);
     private String secretKey;
 
    @Enumerated(EnumType.STRING)

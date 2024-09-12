@@ -15,7 +15,6 @@ import java.util.List;
 public class AccountHolders extends User{
 
     private LocalDate dateOfBirth;
-    private String name;
 
     @OneToOne
     private Address primaryAddress;
