@@ -13,7 +13,7 @@ public abstract class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long balance;
+    private BigDecimal balance;
 
     private BigDecimal penaltyFee = BigDecimal.valueOf(40);  // Valor por defecto para penalizaciones
 
