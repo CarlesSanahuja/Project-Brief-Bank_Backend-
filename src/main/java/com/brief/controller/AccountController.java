@@ -4,6 +4,7 @@ import com.brief.model.Account;
 import com.brief.model.AccountHolders;
 import com.brief.model.CreditCard;
 import com.brief.model.Savings;
+import com.brief.repository.AccountHoldersRepository;
 import com.brief.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,20 +20,32 @@ import java.math.BigDecimal;
 public class AccountController {
 
     @Autowired
+    private AccountHoldersRepository accountHoldersRepository;
+
+    @Autowired
     private AccountService accountService;
 
-    // Crear Checking/StudentChecking Account
     @PostMapping("/checking")
     public ResponseEntity<Account> createCheckingAccount(
             @RequestParam Long primaryOwnerId,
             @RequestParam(required = false) Long secondaryOwnerId,
             @RequestParam BigDecimal balance) {
 
-        AccountHolders primaryOwner = new AccountHolders(); // Debes obtener el objeto de la BD
-        AccountHolders secondaryOwner = secondaryOwnerId != null ? new AccountHolders() : null; // Obtener desde la BD o dejar en null si no hay propietario secundario
+        // Buscar el dueño principal
+        AccountHolders primaryOwner = accountHoldersRepository.findById(primaryOwnerId)
+                .orElseThrow(() -> new IllegalArgumentException("Primary owner not found"));
 
+        // Buscar el dueño secundario (si se ha proporcionado)
+        AccountHolders secondaryOwner = null;
+        if (secondaryOwnerId != null) {
+            secondaryOwner = accountHoldersRepository.findById(secondaryOwnerId)
+                    .orElseThrow(() -> new IllegalArgumentException("Secondary owner not found"));
+        }
+
+        // Crear la cuenta corriente
         Account checkingAccount = accountService.createCheckingAccount(primaryOwner, secondaryOwner, balance);
         return ResponseEntity.ok(checkingAccount);
+
     }
 
     // Crear Savings Account

@@ -1,5 +1,6 @@
 package com.brief.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -13,6 +14,7 @@ import java.util.List;
 @Data
 @Entity
 public class AccountHolders extends User{
+    private String name;
 
     private LocalDate dateOfBirth;
 
@@ -23,5 +25,6 @@ public class AccountHolders extends User{
     private Address mailingAddress;  // Opcional
 
     @OneToMany(mappedBy = "primaryOwner")
+    @JsonBackReference  // Esto indica la parte "trasera" de la relación
     private List<Account> accounts;  // Lista de cuentas donde es primaryOwner
 }
