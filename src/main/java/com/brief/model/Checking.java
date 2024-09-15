@@ -7,7 +7,6 @@ import jakarta.persistence.Enumerated;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @Data
 @Entity
@@ -19,4 +18,17 @@ public class Checking extends Account{
 
    @Enumerated(EnumType.STRING)
    private Status status;
+
+    // 4.2 --------------------------
+    // Implementación del metodo applyInterest(), pero vacío ya que Checking no genera intereses
+    @Override
+    public void applyInterest() {
+        // Las cuentas Checking no aplican intereses, por lo que esta implementación está vacía
+    } // ---------------------
+
+    // 4.1 ---------------
+    @Override
+    public void applyPenaltyIfNecessary() {
+        super.applyPenaltyIfNecessary(minimumBalance);
+    } // -----
 }

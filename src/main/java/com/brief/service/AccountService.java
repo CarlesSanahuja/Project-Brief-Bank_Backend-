@@ -10,13 +10,19 @@ import java.time.Period;
 public class AccountService {
     public Account createCheckingAccount(AccountHolders primaryOwner, AccountHolders secondaryOwner, BigDecimal balance) {
         int age = Period.between(primaryOwner.getDateOfBirth(), LocalDate.now()).getYears();
-        if (age < 24) {
-            return new StudentChecking();
+        Account account;
+        if (age < 24) { // 4.1---
+            account = new StudentChecking();
         } else {
-            return new Checking();
+            account = new Checking();
         }
+        account.setPrimaryOwner(primaryOwner);
+        account.setSecondaryOwner(secondaryOwner);
+        account.setBalance(balance);
+        account.applyPenaltyIfNecessary();
+        return account;
     }
-
+ // ---
     public Savings createSavingsAccount(AccountHolders primaryOwner, AccountHolders secondaryOwner, BigDecimal balance, BigDecimal interestRate, BigDecimal minimumBalance) {
         Savings savingsAccount = new Savings();
         savingsAccount.setPrimaryOwner(primaryOwner);
@@ -24,6 +30,8 @@ public class AccountService {
         savingsAccount.setBalance(balance);
         savingsAccount.setInterestRate(interestRate);
         savingsAccount.setMinimumBalance(minimumBalance);
+        savingsAccount.applyPenaltyIfNecessary(); // ---
+        savingsAccount.applyInterest();  // 4.2  Aplicar intereses si corresponde
         return savingsAccount;
     }
 
@@ -34,6 +42,9 @@ public class AccountService {
         creditCardAccount.setBalance(balance);
         creditCardAccount.setCreditLimit(creditLimit);
         creditCardAccount.setInterestRate(interestRate);
+        creditCardAccount.applyPenaltyIfNecessary(); // ----
+        creditCardAccount.applyInterest();  // 4.2  Aplicar intereses si corresponde
         return creditCardAccount;
     }
+
 }

@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.Period;
 
 @Data
 @Entity
@@ -22,6 +24,26 @@ public class CreditCard extends Account{
     public void setInterestRate(BigDecimal interestRate) {
         if (interestRate.compareTo(BigDecimal.valueOf(0.1)) >= 0) {
             this.interestRate = interestRate;
+        }
+    }
+    // 4.1 ------------------
+    @Override
+    public void applyPenaltyIfNecessary() {
+        // CreditCard doesn't have a minimum balance, but penaltyFee still applies if needed
+        super.applyPenaltyIfNecessary(BigDecimal.ZERO);
+    }
+    // 4.2 -----------------
+    //  Añadimos la lógica para aplicar intereses mensualmente.
+    // Aplicar intereses si ha pasado más de 1 mes desde la última vez que se aplicaron
+    @Override
+    public void applyInterest() {
+        LocalDate now = LocalDate.now();
+        Period period = Period.between(super.getLastInterestDate(), now);
+
+        if (period.getMonths() >= 1) {
+            BigDecimal interest = getBalance().multiply(interestRate).divide(BigDecimal.valueOf(12)); // Interés mensual
+            setBalance(getBalance().add(interest));
+            setLastInterestDate(now); // Actualizar la fecha de la última aplicación de intereses
         }
     }
 }

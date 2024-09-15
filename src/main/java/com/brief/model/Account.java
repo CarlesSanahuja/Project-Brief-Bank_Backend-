@@ -19,6 +19,11 @@ public abstract class Account {
 
     private LocalDate creationDate = LocalDate.now();
 
+    // 4.2 ---------------------
+    // Nueva propiedad para registrar la última vez que se añadieron intereses
+    private LocalDate lastInterestDate = LocalDate.now();
+    // -------------------------
+
     // Relación con AccountHolder
     @ManyToOne
     @JoinColumn(name = "primary_owner_id")  // Columna que relaciona con el PrimaryOwner
@@ -28,4 +33,17 @@ public abstract class Account {
     @JoinColumn(name = "secondary_owner_id", nullable = true)  // Secundario es opcional
     private AccountHolders secondaryOwner;
 
+    // 4.1 -------------------
+    // Metodo para aplicar penalización si el saldo es menor que el saldo mínimo
+    public void applyPenaltyIfNecessary(BigDecimal minimumBalance) {
+        if (balance.compareTo(minimumBalance) < 0) {
+            balance = balance.subtract(penaltyFee);
+        }
+    } // ---------------
+
+    public abstract void applyPenaltyIfNecessary();
+    // 4.2 ------------------------
+    // Metodo abstracto para actualizar los intereses
+    public abstract void applyInterest();
+    // -----------------------------
 }

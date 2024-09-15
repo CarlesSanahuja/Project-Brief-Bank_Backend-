@@ -5,7 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Data;
-
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
@@ -15,4 +15,16 @@ public class StudentChecking extends Account{
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    // 4.2 ---------------------
+    // Sobrescribir el metodo abstracto 'applyInterest' para StudentChecking
+    @Override
+    public void applyInterest() {
+        // StudentChecking no tiene intereses que aplicar, por lo que esta implementación está vacía
+    } // -----------------------
+    // 4.1 -------
+    @Override
+    public void applyPenaltyIfNecessary() {
+        super.applyPenaltyIfNecessary(BigDecimal.ZERO);
+    }  // ------
 }

@@ -8,6 +8,8 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Period;
+
 @Data
 @Entity
 public class Savings extends Account{
@@ -31,4 +33,22 @@ public class Savings extends Account{
 
     @Enumerated(EnumType.STRING)
     private Status status;
+    // 4.1 ------------
+    @Override
+    public void applyPenaltyIfNecessary() {
+        super.applyPenaltyIfNecessary(minimumBalance);
+    } // --------------
+    // 4.2 -------------------------
+    // Aplicar intereses si ha pasado más de 1 año desde la última vez que se aplicaron
+    @Override
+    public void applyInterest() {
+        LocalDate now = LocalDate.now();
+        Period period = Period.between(super.getLastInterestDate(), now);
+
+        if (period.getYears() >= 1) {
+            BigDecimal interest = getBalance().multiply(interestRate); // Interés = saldo * tasa de interés
+            setBalance(getBalance().add(interest));
+            setLastInterestDate(now); // Actualizar la fecha de la última aplicación de intereses
+        }
+    }  // ------------------------------
 }
