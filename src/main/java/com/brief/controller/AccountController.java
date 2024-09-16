@@ -8,10 +8,7 @@ import com.brief.repository.AccountHoldersRepository;
 import com.brief.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 
@@ -22,6 +19,12 @@ public class AccountController {
     private AccountHoldersRepository accountHoldersRepository;
     @Autowired
     private AccountService accountService;
+    // 5.1
+    @GetMapping("/{id}/balance")
+    public ResponseEntity<BigDecimal> getBalanceById(@PathVariable Long id) {
+        BigDecimal balance = accountService.getAccountBalanceById(id);
+        return ResponseEntity.ok(balance);
+    }
     @PostMapping("/checking")
     public ResponseEntity<Account> createCheckingAccount(
             @RequestParam Long primaryOwnerId,
@@ -95,5 +98,16 @@ public class AccountController {
 
         CreditCard creditCardAccount = accountService.createCreditCardAccount(primaryOwner, secondaryOwner, balance, defaultCreditLimit, defaultInterestRate);
         return ResponseEntity.ok(creditCardAccount);
+    }
+    //5.2
+    @PutMapping("/transfer")
+    public ResponseEntity<String> transferMoney(
+            @RequestParam Long sourceAccountId,
+            @RequestParam Long destinationAccountId,
+            @RequestParam String accountHolderName,  // Nombre del titular de la cuenta de destino
+            @RequestParam BigDecimal amount) {
+
+        accountService.transferMoney(sourceAccountId, destinationAccountId, accountHolderName, amount);
+        return ResponseEntity.ok("Transferencia realizada con éxito");
     }
 }
