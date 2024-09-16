@@ -54,8 +54,14 @@ public class AccountController {
             @RequestParam(required = false) BigDecimal interestRate,
             @RequestParam(required = false) BigDecimal minimumBalance) {
 
-        AccountHolders primaryOwner = new AccountHolders(); // Debes obtener el objeto de la BD
-        AccountHolders secondaryOwner = secondaryOwnerId != null ? new AccountHolders() : null;
+        AccountHolders primaryOwner = accountHoldersRepository.findById(primaryOwnerId)
+                .orElseThrow(() -> new IllegalArgumentException("Primary owner not found"));
+
+        AccountHolders secondaryOwner = null;
+        if (secondaryOwnerId != null) {
+            secondaryOwner = accountHoldersRepository.findById(secondaryOwnerId)
+                    .orElseThrow(() -> new IllegalArgumentException("Secondary owner not found"));
+        }
 
         // Valores por defecto si no se especifican
         BigDecimal defaultInterestRate = interestRate != null ? interestRate : BigDecimal.valueOf(0.0025);
@@ -74,8 +80,14 @@ public class AccountController {
             @RequestParam(required = false) BigDecimal creditLimit,
             @RequestParam(required = false) BigDecimal interestRate) {
 
-        AccountHolders primaryOwner = new AccountHolders(); // Debes obtener el objeto de la BD
-        AccountHolders secondaryOwner = secondaryOwnerId != null ? new AccountHolders() : null;
+        AccountHolders primaryOwner = accountHoldersRepository.findById(primaryOwnerId)
+                .orElseThrow(() -> new IllegalArgumentException("Primary owner not found"));
+
+        AccountHolders secondaryOwner = null;
+        if (secondaryOwnerId != null) {
+            secondaryOwner = accountHoldersRepository.findById(secondaryOwnerId)
+                    .orElseThrow(() -> new IllegalArgumentException("Secondary owner not found"));
+        }
 
         // Valores por defecto si no se especifican
         BigDecimal defaultCreditLimit = creditLimit != null ? creditLimit : BigDecimal.valueOf(100);
