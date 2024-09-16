@@ -18,13 +18,10 @@ import java.math.BigDecimal;
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
-
     @Autowired
     private AccountHoldersRepository accountHoldersRepository;
-
     @Autowired
     private AccountService accountService;
-
     @PostMapping("/checking")
     public ResponseEntity<Account> createCheckingAccount(
             @RequestParam Long primaryOwnerId,
