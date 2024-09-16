@@ -1,4 +1,5 @@
 package com.brief.model;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.math.BigDecimal;
@@ -26,6 +27,7 @@ public abstract class Account {
 
     // Relación con AccountHolder
     @ManyToOne
+    @JsonManagedReference
     @JoinColumn(name = "primary_owner_id")  // Columna que relaciona con el PrimaryOwner
     private AccountHolders primaryOwner;
 
