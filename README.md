@@ -53,14 +53,6 @@ This project is a bank account management system that allows creating different 
 
 - **AccountController**: Handles operations related to bank accounts.
 
-## Main Functionalities
-
-1. Creation of different types of bank accounts.
-2. Management of primary and secondary account holders.
-3. Transfers between accounts.
-4. Application of interest and penalties depending on the account type.
-5. Management of account status (active/blocked).
-
 ## Technologies Used
 
 - Intellij as the development environment for working with Java.
@@ -123,6 +115,130 @@ The Brief project is a complete bank account management system that allows manag
 
 7. **Third-Party Integration**:
     - The system includes a layer to integrate with external services, allowing functionalities like online payments or balance verification.
+
+## Project Statement
+
+**1. The system must have 4 types of accounts: StudentChecking, Checking, Savings, and CreditCard.**
+
+**1.1 Checking Accounts**
+
+Checking accounts must have:
+
+- A balance
+- A secret key
+- A primary owner
+- An optional secondary owner
+- A minimum balance
+- A penalty fee
+- A monthly maintenance fee
+- A creation date
+- A status (FROZEN, ACTIVE)
+
+**1.2 Student Checking Accounts**
+
+Student checking accounts are identical to checking accounts except they DO NOT have:
+
+- A monthly maintenance fee
+- A minimum balance
+
+**1.3 Savings Accounts**
+
+Savings accounts are identical to checking accounts except that:
+
+- They do not have a monthly maintenance fee
+- They have an interest rate
+
+**1.4 Credit Card Accounts**
+
+Credit card accounts have:
+
+- A balance
+- A primary owner
+- An optional secondary owner
+- A credit limit
+- An interest rate
+- A penalty fee
+
+**2. The system must have 3 types of users: administrators, account holders, and third parties.**
+
+**2.1 Account Holders**
+
+Account holders must be able to access their own accounts, and only theirs, when they enter the correct credentials using basic authentication. Account holders have:
+
+- A name
+- Date of birth
+- A primary address (which should be a separate address class)
+- An optional mailing address
+
+**2.2 Administrators**
+
+Administrators only have a name.
+
+**2.3 Third-Party Users**
+
+Third-party accounts have a hashed key and a name.
+
+**3. Administrators can create new accounts. When creating a new account, they can create checking, savings, or credit card accounts.**
+
+**3.1 Savings Accounts**
+
+- Savings accounts have a default interest rate of 0.0025.
+- Savings accounts can be instantiated with a different interest rate, with a maximum rate of 0.5.
+- Savings accounts should have a default minimum balance of 1000.
+- Savings accounts can be created with a minimum balance below 1000 but not lower than 100.
+
+**3.2 Credit Card Accounts**
+
+- Credit card accounts have a default credit limit of 100.
+- Credit card accounts can be created with a credit limit higher than 100 but not exceeding 100,000.
+- Credit card accounts have a default interest rate of 0.2.
+- Credit card accounts can be created with an interest rate lower than 0.2 but not lower than 0.1.
+
+**3.3 Checking Accounts**
+
+- When creating a new checking account, if the primary owner’s balance is less than 24, a student checking account should be created; otherwise, a regular checking account should be created.
+- Checking accounts must have a minimum balance of 250 and a minimum monthly maintenance fee of 12.
+
+**4. Interests and fees must be applied appropriately.**
+
+**4.1 Penalty Fee**
+
+- The penalty fee for all accounts must be 40.
+- If any account falls below the minimum balance, the penalty fee must be automatically deducted from the balance.
+
+**4.2 Interest Rate**
+
+- Savings account interest is added to the account annually at the specified interest rate per year. This means that if I have 1,000,000 in a savings account with an interest rate of 0.01, 1% of 1 million is added to my account after 1 year. When accessing the balance of a savings account, the system should determine if 1 year or more has passed since the account was created or since the last time interest was added and should add the corresponding interest to the balance if necessary.
+
+- Credit card interest is added to the balance monthly. If the interest rate is 12% (0.12), 1% interest will be added to the account monthly. When accessing the balance of a credit card account, the system should verify if 1 month or more has passed since the account was created or since interest was last added, and if so, add the corresponding interest to the balance.
+
+**5. Account Access**
+
+**5.1 Administrators**
+
+- Administrators should be able to access and modify the balance of any account.
+
+**5.2 Account Holders**
+
+- Account holders must be able to access the balance of their own account.
+- Account holders must be able to transfer money from any of their accounts to any other account (regardless of ownership). The transfer should only be processed if the account has sufficient funds. The user must provide the name of the primary or secondary owner and the account ID that should receive the transfer.
+
+**5.3 Third-Party Users**
+
+- There must be a way for third-party users to receive and send money to other accounts.
+- Third-party users must be added to the database by an administrator.
+- To receive and send money, third-party users must provide their encrypted key in the HTTP request header. They must also provide the amount, the account ID, and the account’s secret key.
+
+**6. Technical Requirements of the Project**
+
+- Include a Java/Spring Boot backend.
+- Everything should be stored in MySQL database tables.
+- Include at least 1 GET, POST, PUT/PATCH, and DELETE route.
+- Include authentication with Spring Security.
+- Include unit and integration tests.
+- Include robust error handling.
+- You must use the Money class for all currencies and BigDecimal for any other decimal or large number.
+
 
 # Conclusion
 
