@@ -14,7 +14,7 @@ public class AccountService {
 
     @Autowired
     private AccountRepository accountRepository;
-    // Método para obtener el balance de una cuenta por su ID
+    // Metodo para obtener el balance de una cuenta por su ID
     public BigDecimal getAccountBalanceById(Long id) {
         Account account = accountRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Account not found with ID: " + id));

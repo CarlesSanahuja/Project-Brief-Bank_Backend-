@@ -2,6 +2,14 @@
 
 ## Students: Carles Sanahuja / Gerard Borràs
 
+## github link 
+
+https://github.com/CarlesSanahuja/Project-Brief-Bank_Backend-
+
+## Presentation project canva link
+
+https://www.canva.com/design/DAGRBvM_wlg/oouIdBPBJYlfGjeHFcVtQA/edit?utm_content=DAGRBvM_wlg&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
 This project is a bank account management system that allows creating different types of bank accounts such as checking accounts, savings accounts, and credit cards. The system is developed using Spring Boot and utilizes a MySQL database.
 
 ## Main Features
